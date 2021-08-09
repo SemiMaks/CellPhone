@@ -1,24 +1,44 @@
-# Эта программа тестирует класс CellPhone.
+# Эта программа тестирует класс CellPhone
+# и консервирует(сериализует) объекты CellPhone.
 
+import pickle
 import cellphone
+
+# Константа для имени файла.
+FILENAME = 'cellphones.dat'
 
 
 def main():
-    # Получить данные о телефоне.
-    man = input('Введите производителя: ')
-    mod = input('Введите номер модели: ')
-    retail = float(input('Введите розничную цену: '))
+    # Инициализировать переменную для управления циклом.
+    again = 'д'
 
-    # Создать экземпляр класса CellPhone.
+    # Открыть файл для записи.
+    output_file = open(FILENAME, 'wb')
 
-    phone = cellphone.CellPhone(man, mod, retail)
+    # Получить данные от пользователя.
+    while again == 'д':
+        # Получить данные о телефоне.
+        man = input('Введите производителя: ')
+        mod = input('Введите номер модели: ')
+        retail = float(input('Введите розничную цену: '))
 
-    # Показать введённые данные.
+        # Создать экземпляр класса CellPhone.
+        phone = cellphone.CellPhone(man, mod, retail)
 
-    print('Вот введённые Вами данные:')
-    print('Призводитель телефона: ', phone.get_manufact())
-    print('Модель телефона: ', phone.get_model())
-    print('Розничная цена: ', format(phone.get_retail_price(), '.2f'), sep='')
+        # Показать введённые данные.
+
+        print('Вот введённые Вами данные:')
+        print('Призводитель телефона: ', phone.get_manufact())
+        print('Модель телефона: ', phone.get_model())
+        print('Розничная цена: ', format(phone.get_retail_price(), '.2f'), sep='')
+
+        # Закончервировать объект и записать его в файл.
+        pickle.dump(phone, output_file)
+
+        # Получить ещё один элемент данных?
+        again = input('Введите "д", если хотите добавить ещё: ')
+    # Закрыть файл.
+    output_file.close()
 
 
 main()
